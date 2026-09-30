@@ -1,10 +1,10 @@
 Salve as fotos dos produtos nesta pasta com estes nomes:
 
-01-tablet-lenovo.jpg
-02-notebook-lenovo.jpg
-03-monitor-curvo-27.jpg
-04-kit-logitech.jpg
-05-fone-bluetooth.jpg
-06-mousepad-90x40.jpg
+01-tablet-lenovo.png
+02-notebook-lenovo.png
+03-monitor-curvo-27.png
+04-kit-logitech.png
+05-fone-bluetooth.png
+06-mousepad-90x40.png
 
 Use imagens em boa qualidade, preferencialmente quadradas ou verticais.
