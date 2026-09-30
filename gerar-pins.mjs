@@ -1,8 +1,9 @@
 import fs from "node:fs/promises";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import sharp from "sharp";
 
-const root = path.dirname(new URL(import.meta.url).pathname.replace(/^\/(.:)/, "$1"));
+const root = path.dirname(fileURLToPath(import.meta.url));
 const config = JSON.parse(await fs.readFile(path.join(root, "config.json"), "utf8"));
 const produtos = JSON.parse(await fs.readFile(path.join(root, "dados-pinterest.json"), "utf8"));
 const pinsDir = path.join(root, "pins");
