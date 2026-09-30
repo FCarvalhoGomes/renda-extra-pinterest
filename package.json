@@ -6,6 +6,6 @@
     "gerar": "node gerar-pins.mjs"
   },
   "dependencies": {
-    "sharp": "^0.34.4"
+    "sharp": "^0.35.5"
   }
 }
