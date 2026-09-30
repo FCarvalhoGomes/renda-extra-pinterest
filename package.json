@@ -1,0 +1,11 @@
+{
+  "name": "automacao-pinterest-gratis",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "gerar": "node gerar-pins.mjs"
+  },
+  "dependencies": {
+    "sharp": "^0.34.4"
+  }
+}
