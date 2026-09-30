@@ -81,5 +81,12 @@ for (const produto of produtos) {
 }
 
 const csvText = "\uFEFF" + csvRows.map(row => row.map(csv).join(",")).join("\r\n");
-await fs.writeFile(path.join(root, "pinterest-upload.csv"), csvText, "utf8");
-console.log(`Pronto: ${produtos.length} imagens em pins/ e pinterest-upload.csv gerado.`);
+let csvName = "pinterest-upload.csv";
+try {
+  await fs.writeFile(path.join(root, csvName), csvText, "utf8");
+} catch (error) {
+  if (error?.code !== "EBUSY") throw error;
+  csvName = "pinterest-upload-atualizado.csv";
+  await fs.writeFile(path.join(root, csvName), csvText, "utf8");
+}
+console.log(`Pronto: ${produtos.length} imagens em pins/ e ${csvName} gerado.`);
