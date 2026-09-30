@@ -52,8 +52,15 @@ const csvRows = [["Title", "Media URL", "Pinterest board", "Thumbnail", "Descrip
 for (const produto of produtos) {
   const title = wrap(produto.textoArte, 25);
   const photoPath = path.join(root, produto.foto);
-  const photo = await sharp(photoPath).rotate().resize(840, 690, { fit: "contain", background: "#FFFFFF" }).png().toBuffer();
-  const svg = `
+  const outputPath = path.join(pinsDir, produto.arquivo);
+  const metadata = await sharp(photoPath).metadata();
+  const isReadyPin = metadata.width && metadata.height && Math.abs((metadata.width / metadata.height) - (2 / 3)) < 0.02;
+
+  if (isReadyPin) {
+    await sharp(photoPath).rotate().resize(1000, 1500, { fit: "cover" }).png().toFile(outputPath);
+  } else {
+    const photo = await sharp(photoPath).rotate().resize(840, 690, { fit: "contain", background: "#FFFFFF" }).png().toBuffer();
+    const svg = `
   <svg width="1000" height="1500" xmlns="http://www.w3.org/2000/svg">
     <rect width="1000" height="1500" fill="#F7F6EF"/>
     <rect x="0" y="0" width="1000" height="18" fill="#B7D83D"/>
@@ -66,8 +73,8 @@ for (const produto of produtos) {
     <text x="500" y="1328" text-anchor="middle" font-size="36" font-weight="700" fill="#FFFFFF" font-family="Arial, sans-serif">${escapeXml(produto.cta)}</text>
     <text x="80" y="1432" font-size="20" fill="#59635F" font-family="Arial, sans-serif">Publicidade • link de afiliado</text>
   </svg>`;
-  const outputPath = path.join(pinsDir, produto.arquivo);
-  await sharp(Buffer.from(svg)).composite([{ input: photo, left: 80, top: 350 }]).png().toFile(outputPath);
+    await sharp(Buffer.from(svg)).composite([{ input: photo, left: 80, top: 350 }]).png().toFile(outputPath);
+  }
 
   const mediaUrl = `https://raw.githubusercontent.com/${config.githubUser}/${config.repository}/${config.branch}/pins/${encodeURIComponent(produto.arquivo)}`;
   csvRows.push([produto.titulo, mediaUrl, config.board, "", produto.descricao, produto.link, config.publishDate, produto.keywords]);
