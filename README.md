@@ -1,6 +1,6 @@
 # Automação gratuita para Pinterest
 
-Este projeto cria dez imagens verticais e o arquivo `pinterest-upload.csv` aceito pela importação em lote do Pinterest Business.
+Este projeto cria vinte imagens verticais e o arquivo `pinterest-upload.csv` aceito pela importação em lote do Pinterest Business.
 
 ## Preparação única
 
@@ -16,7 +16,7 @@ Se `pinterest-upload.csv` estiver aberto no Excel, o programa salva o novo lote 
 
 O programa cria:
 
-- dez artes em `pins`;
+- vinte artes em `pins`;
 - `pinterest-upload.csv` com título, descrição, pasta, link afiliado, palavras-chave e URL pública da imagem.
 
 Depois envie esta pasta ao GitHub. No Pinterest Business, acesse `Configurações > Importar conteúdo` e envie `pinterest-upload.csv`.

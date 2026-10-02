@@ -77,7 +77,7 @@ for (const produto of produtos) {
   }
 
   const mediaUrl = `https://raw.githubusercontent.com/${config.githubUser}/${config.repository}/${config.branch}/pins/${encodeURIComponent(produto.arquivo)}`;
-  csvRows.push([produto.titulo, mediaUrl, config.board, "", produto.descricao, produto.link, config.publishDate, produto.keywords]);
+  csvRows.push([produto.titulo, mediaUrl, produto.board || config.board, "", produto.descricao, produto.link, config.publishDate, produto.keywords]);
 }
 
 const csvText = "\uFEFF" + csvRows.map(row => row.map(csv).join(",")).join("\r\n");
