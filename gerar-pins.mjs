@@ -15,6 +15,10 @@ const escapeXml = (text = "") => String(text)
 
 const csv = (value = "") => `"${String(value).replaceAll('"', '""')}"`;
 
+const slugify = (text = "") => String(text)
+  .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+  .toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+
 function wrap(text, max = 26) {
   const words = String(text).split(/\s+/);
   const lines = [];
@@ -77,7 +81,10 @@ for (const produto of produtos) {
   }
 
   const mediaUrl = `https://raw.githubusercontent.com/${config.githubUser}/${config.repository}/${config.branch}/pins/${encodeURIComponent(produto.arquivo)}`;
-  csvRows.push([produto.titulo, mediaUrl, produto.board || config.board, "", produto.descricao, produto.link, config.publishDate, produto.keywords]);
+  const destination = config.useSiteLinks
+    ? `${config.siteUrl}/produto/${slugify(produto.arquivo.replace(/\.[^.]+$/, ""))}.html`
+    : produto.link;
+  csvRows.push([produto.titulo, mediaUrl, produto.board || config.board, "", produto.descricao, destination, config.publishDate, produto.keywords]);
 }
 
 const csvText = "\uFEFF" + csvRows.map(row => row.map(csv).join(",")).join("\r\n");

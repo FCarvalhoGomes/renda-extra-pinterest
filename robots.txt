@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://fcarvalhogomes.github.io/renda-extra-pinterest/sitemap.xml

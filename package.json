@@ -3,7 +3,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "gerar": "node gerar-pins.mjs"
+    "gerar": "node gerar-pins.mjs",
+    "site": "node gerar-site.mjs",
+    "gerar:tudo": "node gerar-site.mjs && node gerar-pins.mjs"
   },
   "dependencies": {
     "sharp": "^0.35.5"

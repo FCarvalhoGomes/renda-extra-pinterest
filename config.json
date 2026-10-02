@@ -2,6 +2,9 @@
   "githubUser": "FCarvalhoGomes",
   "repository": "renda-extra-pinterest",
   "branch": "main",
+  "siteName": "Achados práticos",
+  "siteUrl": "https://fcarvalhogomes.github.io/renda-extra-pinterest",
+  "useSiteLinks": true,
   "board": "Setup produtivo",
   "publishDate": ""
 }
