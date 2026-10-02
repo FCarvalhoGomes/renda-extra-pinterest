@@ -39,28 +39,38 @@ function layout({ title, description, canonicalUrl, content }) {
 </html>`;
 }
 
-const cards = produtos.map((produto) => `
+const card = (produto) => `
   <article class="card">
     <a href="produto/${slug(produto)}.html"><img src="pins/${esc(produto.arquivo)}" alt="${esc(produto.titulo)}" loading="lazy"></a>
     <div><small>${esc(produto.board || config.board)}</small><h2><a href="produto/${slug(produto)}.html">${esc(produto.titulo)}</a></h2><p>${esc(produto.textoArte)}</p><a class="link" href="produto/${slug(produto)}.html">Ver análise</a></div>
-  </article>`).join("");
+  </article>`;
+
+const grupos = ["Setup Home Office", "Casa e Decoração", "Roteadores"];
+const sections = grupos.map((grupo) => {
+  const itens = produtos.filter((produto) => (produto.board || config.board) === grupo);
+  const id = slugify(grupo);
+  return `<section class="group" id="${id}"><h2 class="group-title">${esc(grupo)}</h2><div class="grid">${itens.map(card).join("")}</div></section>`;
+}).join("");
 
 const home = layout({
   title: `${config.siteName} | Casa, tecnologia e produtividade`,
   description: "Seleção de produtos para casa, tecnologia e produtividade com pontos práticos para conferir antes da compra.",
   canonicalUrl: `${config.siteUrl}/`,
-  content: `<section class="hero"><p class="eyebrow">GUIAS DE COMPRA</p><h1>Produtos úteis, com o que conferir antes de comprar</h1><p>Seleções diretas para casa, tecnologia e produtividade.</p></section><section class="grid">${cards}</section>`
+  content: `<section class="hero"><p class="eyebrow">GUIAS DE COMPRA</p><h1>Produtos úteis, com o que conferir antes de comprar</h1><p>Seleções diretas para casa, tecnologia e produtividade.</p><nav class="group-nav">${grupos.map((grupo) => `<a href="#${slugify(grupo)}">${esc(grupo)}</a>`).join("")}</nav></section>${sections}`
 });
 await fs.writeFile(path.join(root, "index.html"), home, "utf8");
 
 for (const produto of produtos) {
   const bullets = produto.beneficios.map((item) => `<li>${esc(item)}</li>`).join("");
   const alt = produto.linkAlternativo ? `<a class="secondary" href="${esc(produto.linkAlternativo)}" rel="nofollow sponsored">Ver opção alternativa</a>` : "";
+  const offer = produto.linkPendente
+    ? `<p class="pending">Link individual deste produto em atualização.</p>`
+    : `<a class="button" href="${esc(produto.link)}" rel="nofollow sponsored">${esc(produto.cta)}</a>${alt}`;
   const content = `<article class="product">
     <a class="back" href="${config.siteUrl}/">← Voltar às indicações</a>
     <div class="product-grid">
       <img src="../pins/${esc(produto.arquivo)}" alt="${esc(produto.titulo)}">
-      <div><p class="eyebrow">${esc(produto.board || config.board)}</p><h1>${esc(produto.titulo)}</h1><p class="lead">${esc(produto.descricao.replace(/\s*Publicidade:.*$/i, ""))}</p><h2>Pontos principais</h2><ul>${bullets}</ul><p class="check">Confirme preço, modelo, medidas, garantia e itens incluídos diretamente no anúncio.</p><a class="button" href="${esc(produto.link)}" rel="nofollow sponsored">${esc(produto.cta)}</a>${alt}<p class="disclosure">Publicidade: esta página contém link de afiliado.</p></div>
+      <div><p class="eyebrow">${esc(produto.board || config.board)}</p><h1>${esc(produto.titulo)}</h1><p class="lead">${esc(produto.descricao.replace(/\s*Publicidade:.*$/i, ""))}</p><h2>Pontos principais</h2><ul>${bullets}</ul><p class="check">Confirme preço, modelo, medidas, garantia e itens incluídos diretamente no anúncio.</p>${offer}<p class="disclosure">Publicidade: esta página pode conter link de afiliado.</p></div>
     </div>
   </article>`;
   await fs.writeFile(path.join(outDir, `${slug(produto)}.html`), layout({ title: produto.titulo, description: produto.descricao, canonicalUrl: canonical(produto), content }), "utf8");

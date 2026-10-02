@@ -4,7 +4,7 @@ Este projeto cria vinte imagens verticais e o arquivo `pinterest-upload.csv` ace
 
 ## Preparação única
 
-1. Entre no GitHub e crie um repositório público chamado `renda-extra-pinterest`.
+1. Use o repositório público `tudotechdicas`.
 2. Abra `config.json` e substitua `SEU_USUARIO_GITHUB` pelo seu usuário.
 3. Coloque as fotos na pasta `fotos` usando exatamente os nomes indicados no arquivo `fotos/LEIA-ME.txt`.
 
